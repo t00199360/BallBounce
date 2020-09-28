@@ -9,7 +9,8 @@ public class Physics_Script : MonoBehaviour
     Vector3 velocity = new Vector3(0, 0, 0);
     Vector3 acceleration = new Vector3(0, -9.8f, 0);
 
-   
+    private float Radius_Of_Sphere = 0.5f;
+    private float Coefficient_of_Restitution = 0.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,16 +21,23 @@ public class Physics_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float d1 = plane.distance_to(transform.position) - Radius_Of_Sphere;
         velocity += acceleration * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
+        float distance_from_center_to_plane = plane.distance_to(transform.position);
+        float d2 = distance_from_center_to_plane - Radius_Of_Sphere;
 
-        if(plane.distance_to(transform.position)<= 0.5f)
+        if(d2<=0)
         {
-            transform.position -= velocity * Time.deltaTime;
             Vector3 parallel = parallel_component(velocity, plane.normal);
             Vector3 perp = perpendicular_component(velocity, plane.normal);
 
-            velocity = perp - 0.6f * parallel;
+            float time_of_impact = Time.deltaTime * d1 / (d1 - d2);
+            transform.position -= velocity * (Time.deltaTime - time_of_impact);
+
+            velocity = perp - Coefficient_of_Restitution * parallel;
+
+            transform.position += velocity * (Time.deltaTime - time_of_impact);
         }
     }
 
