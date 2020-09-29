@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CollissionSystem.cs" />
     <Compile Include="Assets\Physics_Script.cs" />
     <Compile Include="Assets\PlaneScript.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
