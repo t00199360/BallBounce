@@ -12,8 +12,9 @@ namespace Assets
         PlaneScript plane;
         public Vector3 velocity;
         Vector3 acceleration = new Vector3(0, -9.8f, 0);
+        public float Radius_Of_Sphere = 0.5f;
         public Rigidbody sphere;
-        private float Radius_Of_Sphere = 0.5f;
+        private Vector3 lastFrameVelocity;
         private float Coefficient_of_Restitution = 0.6f;
         private void Start()
         {
@@ -26,30 +27,35 @@ namespace Assets
 
         void OnTriggerEnter(Collider other)
         {
-            Debug.Log("triggered");
+            if(other.gameObject.CompareTag("Sphere"))
+            {
+                Debug.Log("Sphere tag triggered");
+                
+                Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+                rb.AddExplosionForce(10f, transform.position, Radius_Of_Sphere, 3.0f);
+            }
+            if(other.gameObject.CompareTag("Plane"))
+            {
+                Debug.Log("Plane tag triggered");
 
+                    Vector3 parallel = parallel_component(velocity, plane.normal);
+                    Vector3 perp = perpendicular_component(velocity, plane.normal);
+
+                    transform.position -= velocity * (Time.deltaTime);
+
+                    velocity = perp - Coefficient_of_Restitution * parallel;
+
+                    transform.position += velocity * (Time.deltaTime);
+                
+            }
         }
         void Update()
         {
-            float d1 = plane.distance_to(transform.position) - Radius_Of_Sphere;
+            lastFrameVelocity = sphere.velocity;
             velocity += acceleration * Time.deltaTime;
             transform.position += velocity * Time.deltaTime;
-            float distance_from_center_to_plane = plane.distance_to(transform.position);
-            float d2 = distance_from_center_to_plane - Radius_Of_Sphere;
-
-            if (d2 <= 0)
-            {
-                Vector3 parallel = parallel_component(velocity, plane.normal);
-                Vector3 perp = perpendicular_component(velocity, plane.normal);
-
-                float time_of_impact = Time.deltaTime * d1 / (d1 - d2);
-                transform.position -= velocity * (Time.deltaTime - time_of_impact);
-
-                velocity = perp - Coefficient_of_Restitution * parallel;
-
-                transform.position += velocity * (Time.deltaTime - time_of_impact);
-            }
         }
+
 
         private void FixedUpdate()
         {
