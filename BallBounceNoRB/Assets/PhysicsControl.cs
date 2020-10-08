@@ -25,45 +25,47 @@ public class PhysicsControl : MonoBehaviour
     void Update()
     {
         float d1 = plane.distance_to(transform.position) - Radius_Of_Sphere;
-        //CHECKPOINT
-        //wrong because sphere .distance to own position is always <= 0. need to find the closest sphere
-        //distance between two points, foreaach loop a list of all spheres to find the closest(smallest distance)
-        float s1 = sphere.distance_to(transform.position) - Radius_Of_Sphere;
+        GameObject closestSphere = sphere.FindClosestSphere();
+        //Debug.Log("closest to " + sphere + "is: " + closestSphere);
+        float s1 = sphere.distance_to(closestSphere.transform.position) - Radius_Of_Sphere;
+        Debug.Log("s1= " + s1);
+        //Debug.Log("test is : " + closestSphere.transform.position);
+
 
         velocity += acceleration * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
         float distance_from_center_to_plane = plane.distance_to(transform.position);
-
-        //                                      sphere needs to be nearestSphere
-        float distance_from_center_to_sphere = sphere.distance_to(transform.position);
+        
+        float distance_from_center_to_sphere = sphere.distance_to(closestSphere.transform.position);
+        //Debug.Log("distance from center to sphere : " + distance_from_center_to_sphere);
         float s2 = distance_from_center_to_sphere - Radius_Of_Sphere;
         float d2 = distance_from_center_to_plane - Radius_Of_Sphere;
 
         if (d2 <= 0)
         {
-            Debug.Log("d2");
+            //Debug.Log("d2");
             Vector3 parallel = parallel_component(velocity, plane.normal);
             Vector3 perp = perpendicular_component(velocity, plane.normal);
 
             float time_of_impact = Time.deltaTime * d1 / (d1 - d2);
             transform.position -= velocity * (Time.deltaTime - time_of_impact);
-
+            Debug.Log("time of impact= " + time_of_impact);
             velocity = perp - Coefficient_of_Restitution * parallel;
 
             transform.position += velocity * (Time.deltaTime - time_of_impact);
         }
         if(s2 <= 0)
         {
-            Debug.Log("s2");
             Vector3 parallel = parallel_component(velocity, sphere.normal);
             Vector3 perpendicular = perpendicular_component(velocity, sphere.normal);
-
+            Debug.Log("s2 is : " + s2);
             float time_of_impact = Time.deltaTime * s1 / (s1 - s2);
-            transform.position -= velocity * (Time.deltaTime - time_of_impact);
+            //Debug.Log("time of impact= " + time_of_impact);
+            sphere.transform.position -= velocity * (Time.deltaTime - time_of_impact);
 
             velocity = perpendicular - Coefficient_of_Restitution * parallel;
 
-            transform.position += velocity * (Time.deltaTime - time_of_impact);
+            sphere.transform.position += velocity * (Time.deltaTime - time_of_impact);
         }
     }
     

@@ -18,7 +18,7 @@ public class Plane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        define_plane(new Vector3(0, -2, 0), new Vector3(0, 1, 0.05f));
+        define_plane(new Vector3(-5, -2, 0), new Vector3(0, 1, 0.05f));
     }
 
     // Update is called once per frame
