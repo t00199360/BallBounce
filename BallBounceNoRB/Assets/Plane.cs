@@ -5,7 +5,6 @@ using UnityEngine.Rendering;
 
 public class Plane : MonoBehaviour
 {
-
     Vector3 point_on_plane, normal_to_plane;
 
     public Vector3 normal
@@ -18,7 +17,7 @@ public class Plane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        define_plane(new Vector3(-5, -2, 0), new Vector3(0, 1, 0.05f));
+        
     }
 
     // Update is called once per frame
@@ -27,14 +26,6 @@ public class Plane : MonoBehaviour
 
     }
 
-    public void define_plane(Vector3 point, Vector3 normal)
-    {
-        point_on_plane = point;
-        normal_to_plane = normal;
-        transform.position = point_on_plane;
-
-        transform.up = normal_to_plane;
-    }
 
     public float distance_to(Vector3 point)
     {
