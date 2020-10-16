@@ -7,6 +7,7 @@ public class Plane : MonoBehaviour
 {
 
     Vector3 point_on_plane, normal_to_plane;
+    List<Plane> ListOfPlanes;
 
     public Vector3 normal
     {
@@ -18,7 +19,21 @@ public class Plane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        define_plane(new Vector3(0, -2, 0), new Vector3(0, 1, 0.05f));
+        ListOfPlanes = new List<Plane>(FindObjectsOfType<Plane>());
+        foreach (Plane plane in ListOfPlanes)
+        {
+            if (plane.name == "Plane 1")
+            {
+                Debug.Log("Plane 1");
+                plane.define_plane(new Vector3(0, -2, 0), new Vector3(0, 1, 0.05f));
+            }
+            if(plane.name == "Plane 2")
+            {
+                Debug.Log("plane 2");
+                plane.define_plane(new Vector3(0, -2, 10), new Vector3(0, 1, -45f));
+            }
+        }
+        
     }
 
     // Update is called once per frame

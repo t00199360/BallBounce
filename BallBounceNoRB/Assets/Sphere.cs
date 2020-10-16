@@ -73,11 +73,11 @@ public class Sphere : MonoBehaviour
         {
             Vector3 parallel = parallel_component(velocity, sphereNormalized);
             Vector3 perpendicular = perpendicular_component(velocity, sphereNormalized);
-            Debug.Log("s1 is: " + s1);
-            Debug.Log("s2 is: " + s2);
+            //Debug.Log("s1 is: " + s1);
+            //Debug.Log("s2 is: " + s2);
 
             float time_of_impact = Time.deltaTime * (s1 / (s1 - s2));
-            Debug.Log(time_of_impact + " is the time of impact");
+            //Debug.Log(time_of_impact + " is the time of impact");
             transform.position -= velocity * (Time.deltaTime - time_of_impact);
 
             velocity = perpendicular - Coefficient_of_Restitution * parallel;
