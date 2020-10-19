@@ -7,7 +7,7 @@ public class instanciate : MonoBehaviour
     GameObject sphereplease,plane;
     int i = 1;
     int j = 1;
-    float Mass = 1f;
+    
     Vector3 Scale = new Vector3(1f, 1f, 1f);
     Vector3 Position,rotation;
     Quaternion Rotation;
@@ -16,7 +16,7 @@ public class instanciate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Position = new Vector3(0, 5, 0);
+        Position = new Vector3(0, 5, 0);                                            //All comments with GO were meant to be in relation to a gameobject but this was revised to be of type Sphere/plane
         while (i <= 2)
         {
             sphereplease = GameObject.CreatePrimitive(PrimitiveType.Sphere);        //creates first sphere

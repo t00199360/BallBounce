@@ -7,6 +7,7 @@ public class Sphere : MonoBehaviour
     public static Vector3 point_on_sphere, normal_to_sphere;
     Vector3 velocity = new Vector3(0, 0, 0);
     Vector3 acceleration = new Vector3(0, -9.8f, 0);
+    float Mass = 1f;
     Sphere closestSphere;
 
     List<Sphere> ListOfSpheres;
@@ -27,6 +28,10 @@ public class Sphere : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Radius_Of_Sphere *= transform.localScale.x;         //should scale the radius to match the increase in mass
+        Mass = transform.localScale.x;                      //fetching the scale value
+        acceleration *= Mass;                               //will hopefully scale the acceleration to reflect the change in mass
+        Debug.Log(acceleration + " is the acceleration");   //the mass change does actually function but bugs with the collision system a lot
         ListOfSpheres = new List<Sphere>(FindObjectsOfType<Sphere>());
         ListOfPlanes = new List<Plane>(FindObjectsOfType<Plane>());
     }

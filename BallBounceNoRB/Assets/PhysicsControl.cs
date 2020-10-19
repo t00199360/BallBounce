@@ -6,7 +6,7 @@ public class PhysicsControl : MonoBehaviour
 {
 
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update            sadly this class sits irrelevant with the sphere handling most of the physics logic
     void Start()
     {
 

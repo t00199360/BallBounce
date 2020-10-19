@@ -19,7 +19,7 @@ public class Plane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ListOfPlanes = new List<Plane>(FindObjectsOfType<Plane>());
+        ListOfPlanes = new List<Plane>(FindObjectsOfType<Plane>());     //repositions and rotates the planes appropriately
         foreach (Plane plane in ListOfPlanes)
         {
             if (plane.name == "Plane 1")
